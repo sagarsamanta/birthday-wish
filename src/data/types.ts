@@ -125,6 +125,14 @@ export interface SiteConfig {
     events: TimelineEvent[];
   };
 
+  /** Spoken birthday wish (plays when the gift opens). */
+  voiceWish: {
+    /** Spoken aloud via the browser voice if no `src` is set. */
+    text: string;
+    /** Optional recorded voice file, e.g. "/music/happy-birthday-sathi.mp3". */
+    src?: string;
+  };
+
   surprise: {
     prompt: string;
     reveal: string;

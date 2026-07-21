@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Gift, Sparkles } from 'lucide-react';
 import { useConfig } from '@/i18n/hooks';
+import { useExperience } from '@/context/ExperienceContext';
 import { Confetti } from '@/components/effects/Confetti';
 import { Cake } from '@/components/effects/Cake';
 import { haptic } from '@/utils/haptics';
+import { sayWish } from '@/utils/speak';
 
 /**
  * The intentional surprise: a wrapped 3D gift box. On tap the lid lifts and
@@ -13,6 +15,7 @@ import { haptic } from '@/utils/haptics';
 export function Surprise() {
   const reduced = useReducedMotion();
   const config = useConfig();
+  const { volume, setVolume } = useExperience();
   const [open, setOpen] = useState(false);
   const [fire, setFire] = useState(0);
 
@@ -21,6 +24,16 @@ export function Surprise() {
     setOpen(true);
     setFire((n) => n + 1);
     haptic([16, 40, 16, 40, 24]);
+
+    // Speak the birthday wish (within this tap, so mobile allows it),
+    // gently ducking the music while it plays.
+    const prevVolume = volume;
+    setVolume(volume * 0.28);
+    sayWish({
+      text: config.voiceWish.text,
+      src: config.voiceWish.src,
+      onEnd: () => setVolume(prevVolume),
+    });
   };
 
   return (

@@ -213,6 +213,13 @@ export const rawConfig = {
     ],
   },
 
+  // Spoken when the gift opens. Record your own voice and set `src` to make
+  // it truly personal:  src: '/music/happy-birthday-sathi.mp3'
+  voiceWish: {
+    text: 'Happy Birthday, Sathi',
+    // src: '/music/happy-birthday-sathi.mp3',
+  },
+
   surprise: {
     prompt: L('Tap to open your gift', 'উপহারটা খুলতে ট্যাপ করো'),
     reveal: L('Happy Birthday, My Love ❤', 'শুভ জন্মদিন, আমার ভালোবাসা ❤'),
