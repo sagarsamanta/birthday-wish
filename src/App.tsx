@@ -21,6 +21,7 @@ import { StoryFlow } from '@/sections/StoryFlow';
 import { Gallery } from '@/sections/Gallery';
 import { LoveLetter } from '@/sections/LoveLetter';
 import { Timeline } from '@/sections/Timeline';
+import { VideoMoment } from '@/sections/VideoMoment';
 import { FamilyWishes } from '@/sections/FamilyWishes';
 import { Surprise } from '@/sections/Surprise';
 import { Finale } from '@/sections/Finale';
@@ -81,6 +82,7 @@ function Experience() {
               <Gallery />
               <LoveLetter />
               <Timeline />
+              <VideoMoment />
               <FamilyWishes />
               <Surprise />
               <Finale />

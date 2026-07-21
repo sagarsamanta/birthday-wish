@@ -90,6 +90,15 @@ export interface SiteConfig {
 
   story: StoryChapter[];
 
+  /** Optional keepsake video (e.g. the registry recording). Omit `src` to hide. */
+  videoMoment: {
+    title: string;
+    intro: string;
+    caption: string;
+    src: string;
+    poster?: string;
+  };
+
   familyWishes: {
     title: string;
     intro: string;

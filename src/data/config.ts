@@ -103,6 +103,17 @@ export const rawConfig = {
     },
   ],
 
+  videoMoment: {
+    title: L('The Day We Made It Official', 'যেদিন আমরা এক হলাম'),
+    intro: L(
+      'Our registry — the quiet moment we signed our forever.',
+      'আমাদের রেজিস্ট্রি — যে শান্ত মুহূর্তে আমরা চিরকালের জন্য সই করলাম।',
+    ),
+    caption: L('15 July 2026', '১৫ জুলাই ২০২৬'),
+    src: '/music/VID-20260721-WA0017.mp4',
+    poster: '/gallery/sagar_sathi_together/IMG-20260715-WA0042.opt.webp',
+  },
+
   familyWishes: {
     title: L('They Wanted to Wish You Too', 'তারাও তোমাকে শুভেচ্ছা জানাতে চেয়েছে'),
     intro: L(

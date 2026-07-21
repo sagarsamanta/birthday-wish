@@ -17,6 +17,8 @@ export const UI = {
   eyebrowJourney: { en: 'Our journey', bn: 'আমাদের পথচলা' },
   eyebrowLetter: { en: 'From my heart', bn: 'আমার মন থেকে' },
   eyebrowWishes: { en: 'With love, from your family', bn: 'ভালোবাসা সহ, তোমার পরিবার থেকে' },
+  eyebrowMoment: { en: 'A moment to keep forever', bn: 'চিরকাল রেখে দেওয়ার মতো মুহূর্ত' },
+  playVideo: { en: 'Play the moment', bn: 'মুহূর্তটা চালাও' },
 
   // Gallery / Lightbox
   swipeZoom: { en: 'swipe · pinch to zoom', bn: 'সোয়াইপ · জুম করতে দুই আঙুল' },
