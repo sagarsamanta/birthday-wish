@@ -129,6 +129,8 @@ export interface SiteConfig {
   voiceWish: {
     /** Spoken aloud via the browser voice if no `src` is set. */
     text: string;
+    /** How many times to repeat the wish. */
+    repeat?: number;
     /** Optional recorded voice file, e.g. "/music/happy-birthday-sathi.mp3". */
     src?: string;
   };

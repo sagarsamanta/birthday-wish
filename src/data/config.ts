@@ -216,7 +216,8 @@ export const rawConfig = {
   // Spoken when the gift opens. Record your own voice and set `src` to make
   // it truly personal:  src: '/music/happy-birthday-sathi.mp3'
   voiceWish: {
-    text: 'Happy Birthday, Sathi',
+    text: 'Happy Birthday, Sathi. Many, many happy returns of the day!',
+    repeat: 3,
     // src: '/music/happy-birthday-sathi.mp3',
   },
 

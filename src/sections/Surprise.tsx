@@ -32,6 +32,7 @@ export function Surprise() {
     sayWish({
       text: config.voiceWish.text,
       src: config.voiceWish.src,
+      times: config.voiceWish.repeat ?? 1,
       onEnd: () => setVolume(prevVolume),
     });
   };
