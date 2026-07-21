@@ -22,11 +22,11 @@
   --color-plum-soft: #9a76ad;
   --color-warmwhite: #f7f0ea;
 
-  /* Fonts */
-  --font-display: 'Playfair Display', serif;
-  --font-serif: 'Cormorant Garamond', serif;
-  --font-sans: 'Outfit', system-ui, sans-serif;
-  --font-script: 'Dancing Script', cursive;
+  /* Fonts — Bengali fallbacks kick in per-glyph automatically */
+  --font-display: 'Playfair Display', 'Noto Serif Bengali', serif;
+  --font-serif: 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+  --font-sans: 'Outfit', 'Hind Siliguri', system-ui, sans-serif;
+  --font-script: 'Dancing Script', 'Hind Siliguri', cursive;
 
   /* Motion */
   --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
@@ -115,19 +115,25 @@ html.lenis body {
   color: transparent;
 }
 
-/* Glassmorphism */
+/* Glassmorphism — theme-aware via variables */
+:root {
+  --glass-bg: color-mix(in oklab, #f7f0ea 7%, transparent);
+  --glass-brd: color-mix(in oklab, #f7f0ea 14%, transparent);
+  --glass-dark-bg: color-mix(in oklab, #0a0710 42%, transparent);
+  --glass-dark-brd: color-mix(in oklab, #f7f0ea 10%, transparent);
+}
 .glass {
-  background: color-mix(in oklab, var(--color-warmwhite) 7%, transparent);
+  background: var(--glass-bg);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid color-mix(in oklab, var(--color-warmwhite) 14%, transparent);
+  border: 1px solid var(--glass-brd);
 }
 
 .glass-dark {
-  background: color-mix(in oklab, var(--color-ink) 42%, transparent);
+  background: var(--glass-dark-bg);
   backdrop-filter: blur(22px) saturate(130%);
   -webkit-backdrop-filter: blur(22px) saturate(130%);
-  border: 1px solid color-mix(in oklab, var(--color-warmwhite) 10%, transparent);
+  border: 1px solid var(--glass-dark-brd);
 }
 
 /* Soft glow */
@@ -273,6 +279,57 @@ html.lenis body {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   color: color-mix(in oklab, var(--color-warmwhite) 65%, transparent);
+}
+
+/* ============================================================
+   LIGHT THEME — soft warm cream for the reading sections
+   (cinematic sections keep their own dark stage; see .stage-dark)
+   ============================================================ */
+:root[data-theme='light'] {
+  --color-ink: #f4ebdf;
+  --color-ink-soft: #ece0d0;
+  --color-night: #efe6da;
+  --color-warmwhite: #40303a; /* now the text colour */
+
+  --color-rose: #c1718a;
+  --color-rose-deep: #9c4f63;
+  --color-blush: #cf8f83;
+  --color-champagne: #9b7a4c;
+  --color-gold: #a9793a;
+  --color-gold-soft: #8f6a33;
+  --color-plum: #6d4b7a;
+  --color-plum-soft: #7a5c8d;
+
+  --glass-bg: color-mix(in oklab, #ffffff 60%, transparent);
+  --glass-brd: color-mix(in oklab, #7a5a4a 18%, transparent);
+  --glass-dark-bg: color-mix(in oklab, #ffffff 58%, transparent);
+  --glass-dark-brd: color-mix(in oklab, #7a5a4a 14%, transparent);
+}
+
+/* Dark cinematic stage — used by hero / surprise / finale so the glowing
+   effects always sit on black, in either theme. */
+.stage-dark {
+  background: radial-gradient(120% 90% at 50% 30%, #171126 0%, #0a0710 60%, #060409 100%);
+}
+/* Text inside a dark stage stays light regardless of theme. */
+.stage-dark-text {
+  --color-warmwhite: #f7f0ea;
+  --glass-bg: color-mix(in oklab, #f7f0ea 7%, transparent);
+  --glass-brd: color-mix(in oklab, #f7f0ea 14%, transparent);
+  --glass-dark-bg: color-mix(in oklab, #0a0710 42%, transparent);
+  --glass-dark-brd: color-mix(in oklab, #f7f0ea 10%, transparent);
+}
+
+/* Light theme softens the aurora so it doesn't overpower the cream. */
+:root[data-theme='light'] .aurora {
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+}
+
+/* Bengali reads better without the wide tracking used for Latin small-caps. */
+:root[lang='bn'] .eyebrow {
+  letter-spacing: 0.18em;
+  text-transform: none;
 }
 
 /* ============================================================

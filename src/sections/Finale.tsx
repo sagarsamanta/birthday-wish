@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
 import { Moon } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig } from '@/i18n/hooks';
 import { HeartCanvas, type HeartCanvasHandle } from '@/components/effects/HeartCanvas';
 import { haptic } from '@/utils/haptics';
 
@@ -13,6 +13,7 @@ import { haptic } from '@/utils/haptics';
  */
 export function Finale() {
   const reduced = useReducedMotion();
+  const config = useConfig();
   const sectionRef = useRef<HTMLElement | null>(null);
   const heart = useRef<HeartCanvasHandle>(null);
   const inView = useInView(sectionRef, { amount: 0.5, once: true });
@@ -48,7 +49,7 @@ export function Finale() {
       ref={sectionRef}
       id="finale"
       aria-label="Finale"
-      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden"
+      className="stage-dark-text relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden"
     >
       <div className="absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_30%,#141026_0%,#08060f_60%,#040309_100%)]" />
       <HeartCanvas ref={heart} active={inView} />

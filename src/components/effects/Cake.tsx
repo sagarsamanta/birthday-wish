@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { useT } from '@/i18n/hooks';
 import { haptic } from '@/utils/haptics';
 
 const CANDLES = [22, 40, 58, 76]; // left % positions across the cake top
@@ -11,6 +12,7 @@ const CANDLES = [22, 40, 58, 76]; // left % positions across the cake top
  */
 export function Cake({ onBlowOut }: { onBlowOut?: () => void }) {
   const reduced = useReducedMotion();
+  const t = useT();
   const [lit, setLit] = useState(true);
 
   const blow = () => {
@@ -128,7 +130,7 @@ export function Cake({ onBlowOut }: { onBlowOut?: () => void }) {
               exit={{ opacity: 0 }}
               className="text-sm tracking-wide text-warmwhite/60"
             >
-              Make a wish — tap to blow out the candles
+              {t('cakeWish')}
             </motion.p>
           ) : (
             <motion.p
@@ -137,7 +139,7 @@ export function Cake({ onBlowOut }: { onBlowOut?: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               className="font-script text-2xl text-rose-gradient"
             >
-              Wish made ✨
+              {t('cakeDone')}
             </motion.p>
           )}
         </AnimatePresence>

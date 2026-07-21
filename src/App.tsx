@@ -5,6 +5,7 @@ import { config } from '@/data/config';
 
 import { Backdrop } from '@/components/background/Backdrop';
 import { CountdownGate } from '@/components/CountdownGate';
+import { TopControls } from '@/components/TopControls';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { MusicController } from '@/components/MusicController';
 import { ScrollProgress } from '@/components/ScrollProgress';
@@ -72,6 +73,7 @@ function Experience() {
           )}
 
           {/* Persistent overlays & interactions */}
+          <TopControls />
           <MusicController />
           <SecretTrigger />
           <SecretMessage />

@@ -9,6 +9,7 @@ import 'swiper/css';
 import 'swiper/css/zoom';
 import type { GalleryItem } from '@/data/types';
 import { SmartImage } from './ui/SmartImage';
+import { useT } from '@/i18n/hooks';
 import { haptic } from '@/utils/haptics';
 
 /**
@@ -26,6 +27,7 @@ export function Lightbox({
   onClose: () => void;
 }) {
   const open = openIndex !== null;
+  const t = useT();
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [active, setActive] = useState(openIndex ?? 0);
 
@@ -55,7 +57,7 @@ export function Lightbox({
   const NavButton = ({ dir }: { dir: -1 | 1 }) => (
     <button
       type="button"
-      aria-label={dir === 1 ? 'Next photo' : 'Previous photo'}
+      aria-label={dir === 1 ? t('next') : t('prev')}
       onClick={() => go(dir)}
       className="glass pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full text-warmwhite shadow-xl transition-transform active:scale-90 sm:h-14 sm:w-14"
     >
@@ -83,7 +85,7 @@ export function Lightbox({
             </span>
             <button
               type="button"
-              aria-label="Close viewer"
+              aria-label={t('close')}
               onClick={() => {
                 haptic(10);
                 onClose();
@@ -156,7 +158,7 @@ export function Lightbox({
             <div className="pointer-events-none absolute inset-x-0 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-20 flex items-center justify-center gap-6">
               <NavButton dir={-1} />
               <span className="text-[10px] uppercase tracking-[0.3em] text-warmwhite/40">
-                swipe · pinch to zoom
+                {t('swipeZoom')}
               </span>
               <NavButton dir={1} />
             </div>

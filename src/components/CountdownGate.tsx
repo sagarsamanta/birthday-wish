@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Heart } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
+import { useExperience } from '@/context/ExperienceContext';
 import { ParticleField } from './background/ParticleField';
 
 interface Remaining {
@@ -54,7 +55,10 @@ function Tile({ value, label, pulse }: { value: number; label: string; pulse?: b
  */
 export function CountdownGate({ onUnlock }: { onUnlock: () => void }) {
   const reduced = useReducedMotion();
-  const target = useMemo(() => new Date(config.unlockDate ?? '').getTime(), []);
+  const config = useConfig();
+  const tr = useT();
+  const { lang, toggleLang } = useExperience();
+  const target = useMemo(() => new Date(config.unlockDate ?? '').getTime(), [config.unlockDate]);
   const [rem, setRem] = useState<Remaining>(() => compute(target));
   const [leaving, setLeaving] = useState(false);
 
@@ -73,7 +77,7 @@ export function CountdownGate({ onUnlock }: { onUnlock: () => void }) {
 
   const prettyDate = useMemo(() => {
     try {
-      return new Date(target).toLocaleDateString(undefined, {
+      return new Date(target).toLocaleDateString(lang === 'bn' ? 'bn-BD' : 'en-GB', {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
@@ -81,19 +85,29 @@ export function CountdownGate({ onUnlock }: { onUnlock: () => void }) {
     } catch {
       return '';
     }
-  }, [target]);
+  }, [target, lang]);
 
   return (
     <AnimatePresence>
       {!leaving && (
         <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink px-6 text-center"
+          className="stage-dark-text fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink px-6 text-center"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, filter: 'blur(12px)' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_35%,#1a1230_0%,#0a0710_60%,#050308_100%)]" />
           <ParticleField className="absolute inset-0 h-full w-full" density={1.2} />
+
+          {/* language toggle */}
+          <button
+            type="button"
+            onClick={toggleLang}
+            aria-label={lang === 'en' ? 'Switch to Bengali' : 'Switch to English'}
+            className="glass absolute right-4 top-[max(1rem,env(safe-area-inset-top))] z-10 flex h-10 items-center gap-1.5 rounded-full px-3.5 text-warmwhite"
+          >
+            <span className="text-xs font-medium tracking-wide">{lang === 'en' ? 'বাংলা' : 'EN'}</span>
+          </button>
 
           <div className="relative flex flex-col items-center">
             <motion.div
@@ -125,7 +139,7 @@ export function CountdownGate({ onUnlock }: { onUnlock: () => void }) {
                 className="text-gold-gradient animate-sheen"
                 style={{ filter: 'drop-shadow(0 6px 26px rgba(230,164,180,0.5))' }}
               >
-                {rem.done ? `Happy Birthday, ${config.wifeName}` : config.countdown.title}
+                {rem.done ? `${tr('cdHappy')}, ${config.wifeName}` : config.countdown.title}
               </span>
             </motion.h1>
 
@@ -135,13 +149,13 @@ export function CountdownGate({ onUnlock }: { onUnlock: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Tile value={rem.d} label="Days" />
+              <Tile value={rem.d} label={tr('cdDays')} />
               <span className="pt-6 font-display text-3xl text-warmwhite/30 sm:pt-8 sm:text-4xl">:</span>
-              <Tile value={rem.h} label="Hours" />
+              <Tile value={rem.h} label={tr('cdHours')} />
               <span className="pt-6 font-display text-3xl text-warmwhite/30 sm:pt-8 sm:text-4xl">:</span>
-              <Tile value={rem.m} label="Minutes" />
+              <Tile value={rem.m} label={tr('cdMinutes')} />
               <span className="pt-6 font-display text-3xl text-warmwhite/30 sm:pt-8 sm:text-4xl">:</span>
-              <Tile value={rem.s} label="Seconds" pulse={!reduced} />
+              <Tile value={rem.s} label={tr('cdSeconds')} pulse={!reduced} />
             </motion.div>
 
             <motion.p
@@ -150,7 +164,7 @@ export function CountdownGate({ onUnlock }: { onUnlock: () => void }) {
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.7 }}
             >
-              {rem.done ? 'Your surprise is ready…' : config.countdown.note}
+              {rem.done ? tr('cdReady') : config.countdown.note}
             </motion.p>
 
             {!rem.done && prettyDate && (

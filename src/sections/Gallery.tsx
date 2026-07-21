@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
 import { SmartImage } from '@/components/ui/SmartImage';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Lightbox } from '@/components/Lightbox';
@@ -17,13 +17,15 @@ const TILTS = [-3, 2.4, -1.6, 3, -2.2, 1.8, -2.8, 2];
  */
 export function Gallery() {
   const reduced = useReducedMotion();
+  const config = useConfig();
+  const t = useT();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const items = config.gallery.items;
 
   return (
     <section id="gallery" aria-label={config.gallery.title} className="section relative py-24">
       <SectionHeading
-        eyebrow="Memories"
+        eyebrow={t('eyebrowMemories')}
         title={config.gallery.title}
         intro={config.gallery.intro}
         className="mb-14"

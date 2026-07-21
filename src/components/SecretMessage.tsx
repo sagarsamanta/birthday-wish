@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, KeyRound } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig } from '@/i18n/hooks';
 import { useExperience } from '@/context/ExperienceContext';
 
 /**
@@ -11,6 +11,7 @@ import { useExperience } from '@/context/ExperienceContext';
  */
 export function SecretMessage() {
   const { secretOpen, closeSecret } = useExperience();
+  const config = useConfig();
   const secret = config.secret;
 
   useEffect(() => {

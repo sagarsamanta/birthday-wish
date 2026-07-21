@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
-import { config } from '@/data/config';
+import { useConfig } from '@/i18n/hooks';
 import type { StoryChapter } from '@/data/types';
 
 // A distinct accent per chapter so the sequence never feels like a loop.
 const ACCENTS = ['from-blush', 'from-rose', 'from-gold', 'from-plum-soft', 'from-champagne'];
 
-function Chapter({ chapter, index }: { chapter: StoryChapter; index: number }) {
+function Chapter({ chapter, index, total }: { chapter: StoryChapter; index: number; total: number }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -59,7 +59,7 @@ function Chapter({ chapter, index }: { chapter: StoryChapter; index: number }) {
       </motion.div>
 
       {/* connecting line to next chapter */}
-      {index < config.story.length - 1 && (
+      {index < total - 1 && (
         <div className="absolute bottom-0 left-1/2 h-16 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-gold-soft/40 to-transparent" />
       )}
     </div>
@@ -73,10 +73,11 @@ function Chapter({ chapter, index }: { chapter: StoryChapter; index: number }) {
  * sequence, never a repeat.
  */
 export function StoryFlow() {
+  const config = useConfig();
   return (
     <section aria-label="Our story" className="relative py-10">
       {config.story.map((chapter, i) => (
-        <Chapter key={i} chapter={chapter} index={i} />
+        <Chapter key={i} chapter={chapter} index={i} total={config.story.length} />
       ))}
     </section>
   );

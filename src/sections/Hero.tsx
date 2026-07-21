@@ -1,8 +1,9 @@
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
 import { useTypewriter } from '@/hooks/useTypewriter';
 import { SmartImage } from '@/components/ui/SmartImage';
+import { ParticleField } from '@/components/background/ParticleField';
 
 /**
  * Full-screen opening. A short typewriter intro builds emotion, then the
@@ -12,6 +13,8 @@ import { SmartImage } from '@/components/ui/SmartImage';
  */
 export function Hero() {
   const reduced = useReducedMotion();
+  const config = useConfig();
+  const t = useT();
   const { displayed, done } = useTypewriter({
     lines: config.hero.typewriter,
     speed: 42,
@@ -24,9 +27,13 @@ export function Hero() {
 
   return (
     <section
-      className="section relative flex min-h-[100svh] flex-col items-center justify-center gap-8 overflow-hidden py-24"
+      className="section stage-dark-text relative flex min-h-[100svh] flex-col items-center justify-center gap-8 overflow-hidden py-24"
       aria-label="Welcome"
     >
+      {/* Always-dark cinematic stage (both themes) */}
+      <div className="stage-dark absolute inset-0" aria-hidden="true" />
+      <ParticleField className="absolute inset-0 h-full w-full" />
+
       {/* Typewriter intro */}
       <div className="relative z-10 min-h-[4.5rem] max-w-2xl space-y-1 text-center">
         {displayed.map((line, i) => (
@@ -171,7 +178,7 @@ export function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.8, duration: 1 }}
           >
-            <span className="text-[10px] uppercase tracking-[0.3em]">scroll</span>
+            <span className="text-[10px] uppercase tracking-[0.3em]">{t('scroll')}</span>
             <motion.div
               animate={{ y: [0, 7, 0] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}

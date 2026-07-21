@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { RotateCcw } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
 import { Reveal } from '@/components/ui/Reveal';
 import { haptic } from '@/utils/haptics';
 
@@ -10,6 +10,8 @@ import { haptic } from '@/utils/haptics';
  */
 export function Closing() {
   const reduced = useReducedMotion();
+  const config = useConfig();
+  const t = useT();
 
   const replay = () => {
     haptic(12);
@@ -37,15 +39,15 @@ export function Closing() {
 
       <Reveal direction="up" delay={0.1}>
         <p className="font-serif-el text-2xl italic leading-relaxed text-warmwhite/75 text-pretty">
-          This little page will always end here.
+          {t('closingLine1')}
           <br />
-          <span className="text-warmwhite/90">We never will.</span>
+          <span className="text-warmwhite/90">{t('closingLine2')}</span>
         </p>
       </Reveal>
 
       <Reveal direction="up" delay={0.2}>
         <p className="mt-12 font-script text-4xl text-rose-gradient">
-          Made with love, only for {config.wifeName}.
+          {t('madeWithLove').replace('{name}', config.wifeName)}
         </p>
       </Reveal>
 
@@ -62,7 +64,7 @@ export function Closing() {
           className="glass mt-14 inline-flex min-h-12 items-center gap-2.5 rounded-full px-7 py-3.5 text-sm text-warmwhite/85"
         >
           <RotateCcw className="h-4 w-4" />
-          Relive it from the start
+          {t('replay')}
         </motion.button>
       </Reveal>
     </section>

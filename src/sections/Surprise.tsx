@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Gift, Sparkles } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig } from '@/i18n/hooks';
 import { Confetti } from '@/components/effects/Confetti';
 import { Cake } from '@/components/effects/Cake';
 import { haptic } from '@/utils/haptics';
@@ -12,6 +12,7 @@ import { haptic } from '@/utils/haptics';
  */
 export function Surprise() {
   const reduced = useReducedMotion();
+  const config = useConfig();
   const [open, setOpen] = useState(false);
   const [fire, setFire] = useState(0);
 
@@ -26,8 +27,11 @@ export function Surprise() {
     <section
       id="surprise"
       aria-label="A surprise for you"
-      className="section relative flex min-h-[90svh] flex-col items-center justify-center py-20"
+      className="section stage-dark-text relative flex min-h-[90svh] flex-col items-center justify-center overflow-hidden py-20"
     >
+      {/* Always-dark stage so the gift glow & confetti pop, in either theme */}
+      <div className="stage-dark absolute inset-0" aria-hidden="true" />
+
       <Confetti fire={fire} origin={{ x: 0.5, y: 0.42 }} />
 
       <div className="relative flex flex-col items-center" style={{ perspective: 900 }}>

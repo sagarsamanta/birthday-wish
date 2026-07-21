@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Heart } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
 import { ParticleField } from './background/ParticleField';
 import { requestMotionPermission } from '@/hooks/useShake';
 
@@ -21,6 +21,8 @@ export function LoadingScreen({
   onDone: () => void;
 }) {
   const reduced = useReducedMotion();
+  const config = useConfig();
+  const t = useT();
   const [phase, setPhase] = useState(0); // 0 initials, 1 whisper, 2 button
   const [leaving, setLeaving] = useState(false);
 
@@ -45,7 +47,7 @@ export function LoadingScreen({
     <AnimatePresence>
       {!leaving && (
         <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink"
+          className="stage-dark-text fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, filter: 'blur(12px)' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -113,7 +115,7 @@ export function LoadingScreen({
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-soft" />
                     </span>
                     <span className="font-sans text-sm font-medium tracking-[0.15em] text-warmwhite">
-                      Open your surprise
+                      {t('enter')}
                     </span>
                   </motion.button>
                 )}
@@ -127,7 +129,7 @@ export function LoadingScreen({
             animate={{ opacity: phase >= 2 ? 1 : 0 }}
             transition={{ duration: 1 }}
           >
-            best experienced with sound on
+            {t('soundHint')}
           </motion.p>
         </motion.div>
       )}

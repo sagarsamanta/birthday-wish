@@ -9,8 +9,11 @@ import {
   type ReactNode,
 } from 'react';
 import { AmbientEngine } from '@/audio/AmbientEngine';
-import { config } from '@/data/config';
+import { rawConfig } from '@/data/config';
 import { haptic } from '@/utils/haptics';
+import type { Lang } from '@/i18n';
+
+type Theme = 'dark' | 'light';
 
 interface ExperienceValue {
   /** true once the loading screen has been dismissed */
@@ -40,7 +43,33 @@ interface ExperienceValue {
   // Balloons — released as she enters the experience
   balloonBurst: number;
   releaseBalloons: () => void;
+
+  // Preferences
+  lang: Lang;
+  toggleLang: () => void;
+  theme: Theme;
+  toggleTheme: () => void;
 }
+
+const readLang = (): Lang => {
+  try {
+    const v = localStorage.getItem('lang');
+    if (v === 'en' || v === 'bn') return v;
+  } catch {
+    /* ignore */
+  }
+  return 'en';
+};
+
+const readTheme = (): Theme => {
+  try {
+    const v = localStorage.getItem('theme');
+    if (v === 'dark' || v === 'light') return v;
+  } catch {
+    /* ignore */
+  }
+  return 'dark';
+};
 
 const Ctx = createContext<ExperienceValue | null>(null);
 
@@ -54,8 +83,40 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [secretOpen, setSecretOpen] = useState(false);
   const [flowerBurst, setFlowerBurst] = useState(0);
   const [balloonBurst, setBalloonBurst] = useState(0);
+  const [lang, setLang] = useState<Lang>(readLang);
+  const [theme, setTheme] = useState<Theme>(readTheme);
 
-  const tracks = config.playlist;
+  const tracks = rawConfig.playlist;
+
+  // Apply + persist theme.
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      /* ignore */
+    }
+  }, [theme]);
+
+  // Persist + reflect language on <html lang>.
+  useEffect(() => {
+    document.documentElement.setAttribute('lang', lang === 'bn' ? 'bn' : 'en');
+    try {
+      localStorage.setItem('lang', lang);
+    } catch {
+      /* ignore */
+    }
+  }, [lang]);
+
+  const toggleLang = useCallback(() => {
+    setLang((l) => (l === 'en' ? 'bn' : 'en'));
+    haptic(10);
+  }, []);
+  const toggleTheme = useCallback(() => {
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+    haptic(10);
+  }, []);
 
   // Lazily create the engine on first need.
   const engine = () => {
@@ -149,12 +210,16 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
       dropFlowers,
       balloonBurst,
       releaseBalloons,
+      lang,
+      toggleLang,
+      theme,
+      toggleTheme,
     }),
     [
       started, start, musicReady, isPlaying, volume, trackIndex, tracks,
       toggleMusic, setVolume, nextTrack, playTrack,
       secretOpen, openSecret, closeSecret, flowerBurst, dropFlowers,
-      balloonBurst, releaseBalloons,
+      balloonBurst, releaseBalloons, lang, toggleLang, theme, toggleTheme,
     ],
   );
 

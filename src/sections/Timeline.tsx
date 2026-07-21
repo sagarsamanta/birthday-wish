@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal } from '@/components/ui/Reveal';
 import { Icon } from '@/utils/icons';
@@ -11,6 +11,8 @@ import { Icon } from '@/utils/icons';
  * Single-column and thumb-friendly on mobile.
  */
 export function Timeline() {
+  const config = useConfig();
+  const t = useT();
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -21,7 +23,7 @@ export function Timeline() {
   return (
     <section id="timeline" aria-label={config.timeline.title} className="section relative py-24">
       <SectionHeading
-        eyebrow="Our journey"
+        eyebrow={t('eyebrowJourney')}
         title={config.timeline.title}
         intro={config.timeline.intro}
         className="mb-16"

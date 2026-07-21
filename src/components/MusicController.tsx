@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Play, Pause, SkipForward, Volume2, Volume1, VolumeX, Music2 } from 'lucide-react';
 import { useExperience } from '@/context/ExperienceContext';
+import { useT } from '@/i18n/hooks';
 import { haptic } from '@/utils/haptics';
 
 /**
@@ -19,6 +20,7 @@ export function MusicController() {
     setVolume,
     trackTitle,
   } = useExperience();
+  const t = useT();
   const [open, setOpen] = useState(false);
 
   if (!started) return null;
@@ -43,7 +45,7 @@ export function MusicController() {
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium text-warmwhite">{trackTitle}</p>
                 <p className="text-[10px] uppercase tracking-widest text-warmwhite/40">
-                  {isPlaying ? 'Now playing' : 'Paused'}
+                  {isPlaying ? t('nowPlaying') : t('paused')}
                 </p>
               </div>
             </div>

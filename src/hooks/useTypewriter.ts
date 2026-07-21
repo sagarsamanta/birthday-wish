@@ -32,8 +32,14 @@ export function useTypewriter({
   const [done, setDone] = useState(false);
   const timers = useRef<number[]>([]);
 
+  const linesKey = lines.join('');
+
   useEffect(() => {
     if (!enabled) return;
+
+    // reset when the text (e.g. language) changes
+    setDisplayed(lines.map(() => ''));
+    setDone(false);
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
@@ -76,7 +82,7 @@ export function useTypewriter({
       timers.current = [];
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enabled]);
+  }, [enabled, linesKey]);
 
   return { displayed, done };
 }

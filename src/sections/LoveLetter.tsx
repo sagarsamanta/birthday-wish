@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Heart } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useTypewriter } from '@/hooks/useTypewriter';
 
@@ -12,6 +12,8 @@ import { useTypewriter } from '@/hooks/useTypewriter';
  */
 export function LoveLetter() {
   const reduced = useReducedMotion();
+  const config = useConfig();
+  const t = useT();
   const letter = config.loveLetter;
   const [opened, setOpened] = useState(false);
   const startedRef = useRef(false);
@@ -30,7 +32,7 @@ export function LoveLetter() {
       className="section relative flex flex-col items-center py-24"
       style={{ perspective: 1200 }}
     >
-      <SectionHeading eyebrow="From my heart" title={letter.title} className="mb-14" />
+      <SectionHeading eyebrow={t('eyebrowLetter')} title={letter.title} className="mb-14" />
 
       <motion.article
         initial={{ opacity: 0, rotateX: reduced ? 0 : -75, y: 40 }}

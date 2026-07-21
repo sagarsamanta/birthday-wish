@@ -1,16 +1,33 @@
 import type { SiteConfig } from './types';
+import { localize, type LS } from '@/i18n';
 
 /**
  * ─────────────────────────────────────────────────────────────
  *  THE ONLY FILE YOU NEED TO EDIT
  * ─────────────────────────────────────────────────────────────
- *  Replace the placeholder text, dates and image paths below with
- *  your own. Drop photos into  /public/gallery  and reference them
- *  as  "/gallery/your-file.jpg". Drop songs into  /public/music.
+ *  Every visible line is written in both languages as `{ en, bn }`.
+ *  Edit either side freely. Language-neutral values (image paths, the
+ *  unlock date, icon names, song moods) are plain strings.
  *
- *  Every value here is optional to change — the site works as-is.
+ *  Photos → /public/gallery (then run `npm run optimize`).
+ *  Songs  → /public/music, then add `src` to a playlist entry.
  */
-export const config: SiteConfig = {
+
+// tiny helper for readability
+const L = (en: string, bn: string): LS => ({ en, bn });
+
+// reusable date pairs
+const D = {
+  may8: L('8 May 2026', '৮ মে ২০২৬'),
+  jun9: L('9 June 2026', '৯ জুন ২০২৬'),
+  jun22: L('22 June 2026', '২২ জুন ২০২৬'),
+  jun28: L('28 June 2026', '২৮ জুন ২০২৬'),
+  jul15: L('15 July 2026', '১৫ জুলাই ২০২৬'),
+  moment: L('A moment I love', 'প্রিয় একটা মুহূর্ত'),
+};
+const SPECIAL = L('Our special day', 'আমাদের বিশেষ দিন');
+
+export const rawConfig = {
   wifeName: 'Sathi',
   yourName: 'Sagar',
   initials: 'S & S',
@@ -21,242 +38,197 @@ export const config: SiteConfig = {
   unlockDate: '2026-07-22T00:00:00',
 
   countdown: {
-    eyebrow: 'A little patience, my love',
-    title: 'Almost Time',
-    note: 'Something I made just for you unlocks on your birthday.',
+    eyebrow: L('A little patience, my love', 'একটু ধৈর্য ধরো, সোনা'),
+    title: L('Almost Time', 'প্রায় সময় হয়ে এল'),
+    note: L(
+      'Something I made just for you unlocks on your birthday.',
+      'শুধু তোমার জন্য বানানো কিছু একটা তোমার জন্মদিনে খুলবে।',
+    ),
   },
 
   loading: {
-    whisper: 'Something special is waiting…',
+    whisper: L('Something special is waiting…', 'বিশেষ কিছু একটা অপেক্ষা করছে…'),
   },
 
   hero: {
     typewriter: [
-      'Of all the days in all the years…',
-      'today is the one the whole world got right.',
+      L('Of all the days in all the years…', 'এত বছরের এত দিনের মধ্যে…'),
+      L('today is the one the whole world got right.', 'আজকের দিনটাই গোটা পৃথিবী নিখুঁত করে দিয়েছে।'),
     ],
-    greeting: 'Happy Birthday',
-    subgreeting: 'To the most beautiful part of my every day.',
+    greeting: L('Happy Birthday', 'শুভ জন্মদিন'),
+    subgreeting: L(
+      'To the most beautiful part of my every day.',
+      'আমার প্রতিটা দিনের সবচেয়ে সুন্দর অংশটাকে।',
+    ),
     backgroundImage: '/gallery/sathi_solo_photo/background.jpg',
   },
 
   story: [
     {
-      eyebrow: 'Chapter One',
-      line: 'You entered my life…',
-      sub: 'and quietly rearranged everything into something better.',
+      eyebrow: L('Chapter One', 'প্রথম অধ্যায়'),
+      line: L('You entered my life…', 'তুমি আমার জীবনে এলে…'),
+      sub: L(
+        'and quietly rearranged everything into something better.',
+        'আর চুপিচুপি সব কিছু আরও সুন্দর করে সাজিয়ে দিলে।',
+      ),
     },
     {
-      eyebrow: 'Chapter Two',
-      line: 'Every smile became brighter.',
-      sub: 'Ordinary moments started to glow just because you were in them.',
+      eyebrow: L('Chapter Two', 'দ্বিতীয় অধ্যায়'),
+      line: L('Every smile became brighter.', 'প্রতিটা হাসি আরও উজ্জ্বল হয়ে উঠল।'),
+      sub: L(
+        'Ordinary moments started to glow just because you were in them.',
+        'সাধারণ মুহূর্তগুলোও জ্বলজ্বল করতে লাগল, শুধু তুমি ছিলে বলে।',
+      ),
     },
     {
-      eyebrow: 'Chapter Three',
-      line: 'Every memory became precious.',
-      sub: 'Even the small ones. Especially the small ones.',
+      eyebrow: L('Chapter Three', 'তৃতীয় অধ্যায়'),
+      line: L('Every memory became precious.', 'প্রতিটা স্মৃতি মূল্যবান হয়ে গেল।'),
+      sub: L(
+        'Even the small ones. Especially the small ones.',
+        'ছোট ছোট মুহূর্তগুলোও। বিশেষ করে সেই ছোট মুহূর্তগুলোই।',
+      ),
     },
     {
-      eyebrow: 'Chapter Four',
-      line: 'Today is your special day.',
-      sub: 'And the whole world feels a little softer for it.',
+      eyebrow: L('Chapter Four', 'চতুর্থ অধ্যায়'),
+      line: L('Today is your special day.', 'আজ তোমার বিশেষ দিন।'),
+      sub: L(
+        'And the whole world feels a little softer for it.',
+        'আর তাতে গোটা পৃথিবীটাই যেন একটু কোমল হয়ে গেছে।',
+      ),
     },
     {
-      eyebrow: 'Chapter Five',
-      line: 'So I just want to say…',
-      sub: 'from the very bottom of my heart —',
+      eyebrow: L('Chapter Five', 'পঞ্চম অধ্যায়'),
+      line: L('So I just want to say…', 'তাই শুধু একটা কথাই বলতে চাই…'),
+      sub: L('from the very bottom of my heart —', 'আমার মনের একেবারে গভীর থেকে —'),
     },
   ],
 
   familyWishes: {
-    title: 'They Wanted to Wish You Too',
-    intro: 'Because you’re loved by more hearts than just mine.',
+    title: L('They Wanted to Wish You Too', 'তারাও তোমাকে শুভেচ্ছা জানাতে চেয়েছে'),
+    intro: L(
+      'Because you’re loved by more hearts than just mine.',
+      'কারণ শুধু আমি নই, আরও অনেক মন তোমাকে ভালোবাসে।',
+    ),
     items: [
-      { src: '/gallery/family_birthday_wish/mother_wish.png', from: 'From Maa', note: 'A mother’s love, wrapped in a wish.' },
-      { src: '/gallery/family_birthday_wish/father_wish.png', from: 'From Baba', note: 'From the one who’s always proud of you.' },
-      { src: '/gallery/family_birthday_wish/brother_wish.png', from: 'From Your Brother', note: 'Some bonds are simply forever.' },
+      {
+        src: '/gallery/family_birthday_wish/mother_wish.png',
+        from: L('From Maa', 'মায়ের তরফ থেকে'),
+        note: L('A mother’s love, wrapped in a wish.', 'একটা শুভেচ্ছায় মোড়া মায়ের ভালোবাসা।'),
+      },
+      {
+        src: '/gallery/family_birthday_wish/father_wish.png',
+        from: L('From Baba', 'বাবার তরফ থেকে'),
+        note: L('From the one who’s always proud of you.', 'যিনি সবসময় তোমাকে নিয়ে গর্বিত, তাঁর কাছ থেকে।'),
+      },
+      {
+        src: '/gallery/family_birthday_wish/brother_wish.png',
+        from: L('From Your Brother', 'তোমার ভাইয়ের তরফ থেকে'),
+        note: L('Some bonds are simply forever.', 'কিছু বন্ধন সত্যিই চিরকালের।'),
+      },
     ],
   },
 
   gallery: {
-    title: 'Our Little Universe',
-    intro: 'A handful of the moments I keep re-living.',
+    title: L('Our Little Universe', 'আমাদের ছোট্ট পৃথিবী'),
+    intro: L('A handful of the moments I keep re-living.', 'কিছু মুহূর্ত, যেগুলো আমি বারবার বেঁচে নিই।'),
     items: [
-      {
-        src: '/gallery/sathi_solo_photo/IMG-20260609-WA0003.jpg',
-        title: 'Simply You',
-        caption: 'No filter needed — you light up every frame you’re in.',
-        date: '9 June 2026',
-      },
-      {
-        src: '/gallery/sagar_sathi_together/IMG-20260715-WA0042.jpg',
-        title: 'You & Me',
-        caption: 'My favourite place in the world is right beside you.',
-        date: '15 July 2026',
-        location: 'Our special day',
-      },
-      {
-        src: '/gallery/sathi_solo_photo/IMG-20260609-WA0012.jpg',
-        title: 'That Smile',
-        caption: 'The one that made me forget whatever I was going to say.',
-        date: '9 June 2026',
-      },
-      {
-        src: '/gallery/sagar_sathi_together/file_00000000109c7207aa8d05dc90247811.png',
-        title: 'Us, Always',
-        caption: 'Somehow every photo of us feels like home.',
-        date: 'A moment I love',
-      },
-      {
-        src: '/gallery/sathi_solo_photo/IMG-20260622-WA0008.jpg',
-        title: 'Effortless',
-        caption: 'You don’t even try, and still you take my breath away.',
-        date: '22 June 2026',
-      },
-      {
-        src: '/gallery/family/IMG_20260715_133625202.jpg',
-        title: 'Family',
-        caption: 'The day two families became a little bigger, a little happier.',
-        date: '15 July 2026',
-        location: 'Our special day',
-      },
-      {
-        src: '/gallery/sathi_solo_photo/IMG-20260628-WA0011.jpg',
-        title: 'Just Beautiful',
-        caption: 'I could look at you for the rest of my life. I intend to.',
-        date: '28 June 2026',
-      },
-      {
-        src: '/gallery/sagar_sathi_together/file_00000000d5e0720798d9419e07cfe6be.png',
-        title: 'Together',
-        caption: 'Every good story I have, you’re somewhere in it.',
-        date: 'A moment I love',
-      },
-      {
-        src: '/gallery/sathi_solo_photo/IMG-20260609-WA0015.jpg',
-        title: 'Radiant',
-        caption: 'There’s a glow about you that no camera fully captures.',
-        date: '9 June 2026',
-      },
-      {
-        src: '/gallery/sagar_sathi_together/IMG-20260715-WA0045.jpg',
-        title: 'Our Day',
-        caption: 'The day I got to call you mine, officially and forever.',
-        date: '15 July 2026',
-        location: 'Our special day',
-      },
-      {
-        src: '/gallery/sagar_sathi_together/IMG-20260715-WA0026.jpg',
-        title: 'Side by Side',
-        caption: 'Wherever the road goes next, I want to walk it with you.',
-        date: '15 July 2026',
-        location: 'Our special day',
-      },
-      {
-        src: '/gallery/sathi_solo_photo/IMG-20260715-WA0057.jpg',
-        title: 'Glowing',
-        caption: 'You wore happiness like it was made for you.',
-        date: '15 July 2026',
-        location: 'Our special day',
-      },
-      {
-        src: '/gallery/sagar_sathi_together/file_00000000d83871fa99198e7ad16b3153.png',
-        title: 'My Person',
-        caption: 'Of all the hands to hold, I’m so glad it’s yours.',
-        date: 'A moment I love',
-      },
-      {
-        src: '/gallery/family/IMG_20260715_133822422.jpg',
-        title: 'Loved',
-        caption: 'Surrounded by the people who adore you — as you should always be.',
-        date: '15 July 2026',
-        location: 'Our special day',
-      },
-      {
-        src: '/gallery/family/IMG-20260609-WA0013.jpg',
-        title: 'Where You Come From',
-        caption: 'The love you give so freely — you learned it here first.',
-        date: '9 June 2026',
-      },
-      {
-        src: '/gallery/family/IMG-20260715-WA0000.jpg',
-        title: 'All Together',
-        caption: 'The best days are the ones with everyone under one roof.',
-        date: '15 July 2026',
-        location: 'Our special day',
-      },
-      {
-        src: '/gallery/family/file_000000006f407206808914686e5bbd86.png',
-        title: 'Home',
-        caption: 'Family isn’t just where we start — it’s where we belong.',
-        date: 'A moment I love',
-      },
-      {
-        src: '/gallery/sathi_solo_photo/file_0000000017b0722f86861cf417c09426.png',
-        title: 'One In A Million',
-        caption: 'There is no one, anywhere, quite like you.',
-        date: 'A moment I love',
-      },
-      {
-        src: '/gallery/sagar_sathi_together/file_00000000e2b072068497deb0614dcf0e.png',
-        title: 'Forever Us',
-        caption: 'Here’s to a thousand more photos just like this one.',
-        date: 'A moment I love',
-      },
+      { src: '/gallery/sathi_solo_photo/IMG-20260609-WA0003.jpg', title: L('Simply You', 'শুধুই তুমি'), caption: L('No filter needed — you light up every frame you’re in.', 'কোনো ফিল্টার লাগে না — তুমি যে ফ্রেমেই থাকো, আলো করে দাও।'), date: D.jun9 },
+      { src: '/gallery/sagar_sathi_together/IMG-20260715-WA0042.jpg', title: L('You & Me', 'তুমি আর আমি'), caption: L('My favourite place in the world is right beside you.', 'পৃথিবীতে আমার সবচেয়ে প্রিয় জায়গাটা তোমার পাশেই।'), date: D.jul15, location: SPECIAL },
+      { src: '/gallery/sathi_solo_photo/IMG-20260609-WA0012.jpg', title: L('That Smile', 'সেই হাসিটা'), caption: L('The one that made me forget whatever I was going to say.', 'যে হাসি দেখে আমি ভুলে যাই কী বলতে চেয়েছিলাম।'), date: D.jun9 },
+      { src: '/gallery/sagar_sathi_together/file_00000000109c7207aa8d05dc90247811.png', title: L('Us, Always', 'আমরা, সবসময়'), caption: L('Somehow every photo of us feels like home.', 'আমাদের প্রতিটা ছবিই কেমন যেন ঘরের মতো লাগে।'), date: D.moment },
+      { src: '/gallery/sathi_solo_photo/IMG-20260622-WA0008.jpg', title: L('Effortless', 'অনায়াসে সুন্দর'), caption: L('You don’t even try, and still you take my breath away.', 'তুমি চেষ্টাও করো না, তবু আমার নিঃশ্বাস কেড়ে নাও।'), date: D.jun22 },
+      { src: '/gallery/family/IMG_20260715_133625202.jpg', title: L('Family', 'পরিবার'), caption: L('The day two families became a little bigger, a little happier.', 'যেদিন দুটো পরিবার আরও একটু বড়, আরও একটু খুশি হয়ে উঠল।'), date: D.jul15, location: SPECIAL },
+      { src: '/gallery/sathi_solo_photo/IMG-20260628-WA0011.jpg', title: L('Just Beautiful', 'শুধুই সুন্দর'), caption: L('I could look at you for the rest of my life. I intend to.', 'সারাজীবন তোমার দিকে তাকিয়ে থাকতে পারি। আমি সেটাই চাই।'), date: D.jun28 },
+      { src: '/gallery/sagar_sathi_together/file_00000000d5e0720798d9419e07cfe6be.png', title: L('Together', 'একসাথে'), caption: L('Every good story I have, you’re somewhere in it.', 'আমার প্রতিটা সুন্দর গল্পে কোথাও না কোথাও তুমি আছো।'), date: D.moment },
+      { src: '/gallery/sathi_solo_photo/IMG-20260609-WA0015.jpg', title: L('Radiant', 'দীপ্তিময়'), caption: L('There’s a glow about you that no camera fully captures.', 'তোমার মধ্যে এমন একটা আলো আছে, কোনো ক্যামেরাই পুরোটা ধরতে পারে না।'), date: D.jun9 },
+      { src: '/gallery/sagar_sathi_together/IMG-20260715-WA0045.jpg', title: L('Our Day', 'আমাদের দিন'), caption: L('The day I got to call you mine, officially and forever.', 'যেদিন তোমাকে আনুষ্ঠানিকভাবে, চিরকালের জন্য নিজের বলতে পারলাম।'), date: D.jul15, location: SPECIAL },
+      { src: '/gallery/sathi_solo_photo/IMG-20260715-WA0057.jpg', title: L('Glowing', 'উজ্জ্বল'), caption: L('You wore happiness like it was made for you.', 'তুমি খুশিটাকে এমনভাবে পরেছিলে, যেন ওটা তোমার জন্যই তৈরি।'), date: D.jul15, location: SPECIAL },
+      { src: '/gallery/sagar_sathi_together/file_00000000d83871fa99198e7ad16b3153.png', title: L('My Person', 'আমার মানুষ'), caption: L('Of all the hands to hold, I’m so glad it’s yours.', 'এত হাতের মধ্যে, তোমার হাতটাই ধরতে পেরে আমি ধন্য।'), date: D.moment },
+      { src: '/gallery/family/IMG_20260715_133822422.jpg', title: L('Loved', 'ভালোবাসায় ঘেরা'), caption: L('Surrounded by the people who adore you — as you should always be.', 'যারা তোমাকে ভালোবাসে তাদের মাঝে — তুমি সবসময় এমনই থেকো।'), date: D.jul15, location: SPECIAL },
+      { src: '/gallery/sathi_solo_photo/file_0000000017b0722f86861cf417c09426.png', title: L('One In A Million', 'লাখে একজন'), caption: L('There is no one, anywhere, quite like you.', 'কোথাও, কেউ ঠিক তোমার মতো নেই।'), date: D.moment },
+      { src: '/gallery/sagar_sathi_together/file_00000000e2b072068497deb0614dcf0e.png', title: L('Forever Us', 'চিরকাল আমরা'), caption: L('Here’s to a thousand more photos just like this one.', 'ঠিক এমন আরও হাজারটা ছবির জন্য শুভকামনা।'), date: D.moment },
+      { src: '/gallery/sagar_sathi_together/IMG-20260715-WA0026.jpg', title: L('Side by Side', 'পাশাপাশি'), caption: L('Wherever the road goes next, I want to walk it with you.', 'রাস্তা এরপর যেদিকেই যাক, আমি তোমার সাথেই হাঁটতে চাই।'), date: D.jul15, location: SPECIAL },
+      { src: '/gallery/family/IMG-20260609-WA0013.jpg', title: L('Where You Come From', 'তোমার শিকড়'), caption: L('The love you give so freely — you learned it here first.', 'যে ভালোবাসা তুমি এত অকৃপণভাবে দাও — সেটা প্রথম এখান থেকেই শিখেছ।'), date: D.jun9 },
+      { src: '/gallery/family/IMG-20260715-WA0000.jpg', title: L('All Together', 'সবাই একসাথে'), caption: L('The best days are the ones with everyone under one roof.', 'সেরা দিনগুলো সেই, যখন সবাই এক ছাদের নিচে থাকে।'), date: D.jul15, location: SPECIAL },
+      { src: '/gallery/family/file_000000006f407206808914686e5bbd86.png', title: L('Home', 'ঘর'), caption: L('Family isn’t just where we start — it’s where we belong.', 'পরিবার শুধু শুরুর জায়গা নয় — ওটাই আমাদের আপন জায়গা।'), date: D.moment },
     ],
   },
 
   loveLetter: {
-    title: 'A Letter For You',
-    salutation: 'My dearest,',
+    title: L('A Letter For You', 'তোমার জন্য একটা চিঠি'),
+    salutation: L('My dearest,', 'আমার সবচেয়ে প্রিয়,'),
     body: [
-      'If I tried to write down every reason I love you, I would run out of paper long before I ran out of reasons.',
-      'You have this way of turning ordinary days into ones I never want to forget. A glance, a laugh, the sound of your footsteps coming home — these are the things my heart collects.',
-      'Thank you for your patience, your kindness, and the thousand tiny ways you make my world softer. Growing beside you is the greatest privilege of my life.',
-      'Today the world celebrates the day you were born. But I get to celebrate you every single day, and I will never stop feeling lucky about it.',
+      L(
+        'If I tried to write down every reason I love you, I would run out of paper long before I ran out of reasons.',
+        'তোমাকে ভালোবাসার সব কারণ যদি লিখতে বসি, কারণ ফুরোনোর অনেক আগেই কাগজ ফুরিয়ে যাবে।',
+      ),
+      L(
+        'You have this way of turning ordinary days into ones I never want to forget. A glance, a laugh, the sound of your footsteps coming home — these are the things my heart collects.',
+        'সাধারণ দিনগুলোকে তুমি এমন করে তোলো, যেগুলো আমি কখনো ভুলতে চাই না। একটা চাহনি, একটা হাসি, ঘরে ফেরার সময় তোমার পায়ের শব্দ — এগুলোই আমার মন জমিয়ে রাখে।',
+      ),
+      L(
+        'Thank you for your patience, your kindness, and the thousand tiny ways you make my world softer. Growing beside you is the greatest privilege of my life.',
+        'ধন্যবাদ তোমার ধৈর্যের জন্য, তোমার স্নেহের জন্য, আর হাজারটা ছোট ছোট উপায়ে আমার পৃথিবীটাকে কোমল করে তোলার জন্য। তোমার পাশে বেড়ে ওঠাটাই আমার জীবনের সবচেয়ে বড় সৌভাগ্য।',
+      ),
+      L(
+        'Today the world celebrates the day you were born. But I get to celebrate you every single day, and I will never stop feeling lucky about it.',
+        'আজ পৃথিবী তোমার জন্মের দিনটা উদযাপন করছে। কিন্তু আমি তো তোমাকে প্রতিদিন উদযাপন করি, আর এই সৌভাগ্যের অনুভূতি কখনো থামবে না।',
+      ),
     ],
-    signature: 'Forever yours',
+    signature: L('Forever yours', 'চিরকাল তোমার'),
   },
 
   timeline: {
-    title: 'How We Got Here',
-    intro: 'Every date on this line is a date I’d live again.',
+    title: L('How We Got Here', 'আমরা এতদূর যেভাবে এলাম'),
+    intro: L('Every date on this line is a date I’d live again.', 'এই রেখার প্রতিটা দিন আমি আবার বাঁচতে চাই।'),
     events: [
-      { date: '8 May 2026', title: 'The Day We Met', description: 'A perfectly ordinary day that turned out to be the most important one.', icon: 'sparkles' },
-      { date: 'Our first adventure', title: 'Natun Pukur', description: 'Our first trip together — I fell a little more in love with every mile.', icon: 'plane' },
-      { date: '15 July 2026', title: 'We Made It Official', description: 'Our registry marriage — the day we quietly signed our forever.', icon: 'heart' },
-      { date: 'Today', title: 'Your Birthday', description: 'The celebration of the person who made all of it matter.', icon: 'cake' },
+      { date: D.may8, title: L('The Day We Met', 'যেদিন আমাদের দেখা হলো'), description: L('A perfectly ordinary day that turned out to be the most important one.', 'একদম সাধারণ একটা দিন, যেটা হয়ে উঠল সবচেয়ে গুরুত্বপূর্ণ।'), icon: 'sparkles' },
+      { date: L('Our first adventure', 'আমাদের প্রথম অভিযান'), title: L('Natun Pukur', 'নতুন পুকুর'), description: L('Our first trip together — I fell a little more in love with every mile.', 'আমাদের প্রথম একসাথে ঘুরতে যাওয়া — প্রতিটা পথে একটু একটু করে আরও প্রেমে পড়েছি।'), icon: 'plane' },
+      { date: D.jul15, title: L('We Made It Official', 'আমরা আনুষ্ঠানিক হলাম'), description: L('Our registry marriage — the day we quietly signed our forever.', 'আমাদের রেজিস্ট্রি বিয়ে — যেদিন চুপিসারে আমাদের চিরকালের সই করলাম।'), icon: 'heart' },
+      { date: L('Today', 'আজ'), title: L('Your Birthday', 'তোমার জন্মদিন'), description: L('The celebration of the person who made all of it matter.', 'সেই মানুষটার উদযাপন, যার জন্য সব কিছুর মানে।'), icon: 'cake' },
     ],
   },
 
   surprise: {
-    prompt: 'Tap to open your gift',
-    reveal: 'Happy Birthday, My Love ❤',
-    sub: 'You are, and always will be, my favorite gift.',
+    prompt: L('Tap to open your gift', 'উপহারটা খুলতে ট্যাপ করো'),
+    reveal: L('Happy Birthday, My Love ❤', 'শুভ জন্মদিন, আমার ভালোবাসা ❤'),
+    sub: L('You are, and always will be, my favorite gift.', 'তুমিই আমার সবচেয়ে প্রিয় উপহার, আর চিরকাল থাকবে।'),
   },
 
   finale: {
-    heartText: 'I Love You',
-    line: 'Happy Birthday',
+    heartText: L('I Love You', 'ভালোবাসি তোমায়'),
+    line: L('Happy Birthday', 'শুভ জন্মদিন'),
   },
 
   secret: {
-    hint: 'Press and hold anywhere…',
-    title: 'You found it.',
+    hint: L('Press and hold anywhere…', 'যেকোনো জায়গায় চেপে ধরে রাখো…'),
+    title: L('You found it.', 'তুমি খুঁজে পেয়েছ।'),
     body: [
-      'I hid this here just for you — the curious one, the one who always looks a little deeper.',
-      'That’s exactly why I love you. You never stop exploring, and you found the secret only your heart would look for.',
-      'No matter where you are when you read this: I am completely, hopelessly yours.',
+      L(
+        'I hid this here just for you — the curious one, the one who always looks a little deeper.',
+        'এটা শুধু তোমার জন্য লুকিয়ে রেখেছিলাম — কৌতূহলী তুমি, যে সবসময় একটু গভীরে দেখো।',
+      ),
+      L(
+        'That’s exactly why I love you. You never stop exploring, and you found the secret only your heart would look for.',
+        'এই জন্যই তো তোমাকে ভালোবাসি। তুমি কখনো খোঁজা থামাও না, আর শুধু তোমার মনই যা খুঁজত, সেই গোপন কথাটা খুঁজে পেলে।',
+      ),
+      L(
+        'No matter where you are when you read this: I am completely, hopelessly yours.',
+        'এটা পড়ার সময় তুমি যেখানেই থাকো: আমি সম্পূর্ণভাবে, বেপরোয়াভাবে তোমার।',
+      ),
     ],
-    signature: 'Always, and then some.',
+    signature: L('Always, and then some.', 'সবসময়, তারও বেশি।'),
   },
 
   playlist: [
     // Add your own song anytime:  { title: 'Our Song', src: '/music/our-song.mp3' }
-    { title: 'Forever', mood: 'dawn' },
-    { title: 'Starlight', mood: 'starlight' },
-    { title: 'A Quiet Promise', mood: 'dusk' },
+    { title: 'Forever', mood: 'dawn' as const },
+    { title: 'Starlight', mood: 'starlight' as const },
+    { title: 'A Quiet Promise', mood: 'dusk' as const },
   ],
 };
+
+/** English-resolved config (handy for non-reactive/default use). */
+export const config = localize(rawConfig, 'en') as unknown as SiteConfig;
 
 export default config;

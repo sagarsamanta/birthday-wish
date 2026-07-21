@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles } from 'lucide-react';
-import { config } from '@/data/config';
+import { useConfig, useT } from '@/i18n/hooks';
 import { haptic } from '@/utils/haptics';
 import { useExperience } from '@/context/ExperienceContext';
 
@@ -11,6 +11,8 @@ import { useExperience } from '@/context/ExperienceContext';
  */
 export function PullReveal() {
   const { started } = useExperience();
+  const config = useConfig();
+  const t = useT();
   const [pull, setPull] = useState(0);
   const [revealed, setRevealed] = useState(false);
 
@@ -79,8 +81,8 @@ export function PullReveal() {
             <Sparkles className="h-4 w-4 shrink-0 text-gold-soft" />
             <p className="font-serif-el text-sm italic text-warmwhite/85">
               {revealed
-                ? `Even here, at the very top — I was thinking of you, ${config.wifeName}.`
-                : 'keep pulling…'}
+                ? t('pullReveal').replace('{name}', config.wifeName)
+                : t('keepPulling')}
             </p>
           </motion.div>
         )}
