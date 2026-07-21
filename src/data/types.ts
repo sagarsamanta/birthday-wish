@@ -61,6 +61,20 @@ export interface SiteConfig {
   initials: string;
   birthdayDate: string;
 
+  /**
+   * Optional. If set to a future date-time, the whole experience stays locked
+   * behind a live countdown until then (local time). Leave empty/undefined to
+   * unlock immediately. Add `?preview` to the URL to bypass the lock for testing.
+   * Format: 'YYYY-MM-DDTHH:mm:ss'
+   */
+  unlockDate?: string;
+
+  countdown: {
+    eyebrow: string;
+    title: string;
+    note: string;
+  };
+
   loading: {
     whisper: string;
   };

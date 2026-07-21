@@ -14,7 +14,17 @@ export const config: SiteConfig = {
   wifeName: 'Sathi',
   yourName: 'Sagar',
   initials: 'S & S',
-  birthdayDate: '2026-07-21',
+  birthdayDate: '2026-07-22',
+
+  // The surprise unlocks at this moment (viewer's local time).
+  // Opened earlier → a live countdown. Add ?preview to the URL to bypass.
+  unlockDate: '2026-07-22T00:00:00',
+
+  countdown: {
+    eyebrow: 'A little patience, my love',
+    title: 'Almost Time',
+    note: 'Something I made just for you unlocks on your birthday.',
+  },
 
   loading: {
     whisper: 'Something special is waiting…',
