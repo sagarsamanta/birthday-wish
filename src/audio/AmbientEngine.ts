@@ -27,7 +27,7 @@ const semi = (n: number) => C4 * Math.pow(2, n / 12);
 const MOODS: Record<Mood, { bpm: number; chords: Chord[] }> = {
   // "Forever" — C · G · Am · F  (the classic heart-tug)
   dawn: {
-    bpm: 64,
+    bpm: 52,
     chords: [
       { root: 0, type: 'maj' },
       { root: 7, type: 'maj' },
@@ -37,7 +37,7 @@ const MOODS: Record<Mood, { bpm: number; chords: Chord[] }> = {
   },
   // "Starlight" — Am · F · C · G  (dreamy, wistful)
   starlight: {
-    bpm: 60,
+    bpm: 48,
     chords: [
       { root: 9, type: 'min' },
       { root: 5, type: 'maj' },
@@ -47,7 +47,7 @@ const MOODS: Record<Mood, { bpm: number; chords: Chord[] }> = {
   },
   // "A Quiet Promise" — Em · C · G · D  (cinematic, hopeful)
   dusk: {
-    bpm: 56,
+    bpm: 46,
     chords: [
       { root: 4, type: 'min' },
       { root: 0, type: 'maj' },
@@ -57,12 +57,13 @@ const MOODS: Record<Mood, { bpm: number; chords: Chord[] }> = {
   },
 };
 
+// Sparser, more spacious phrases — tender rather than busy.
 const MELODY_PATTERNS = [
-  [0, 1.5, 3],
-  [0.5, 2, 3.5],
   [0, 2],
-  [1, 2.5, 3.5],
-  [0, 1, 2, 3],
+  [1, 3],
+  [0.5, 2.5],
+  [2],
+  [0, 1.5],
 ];
 
 export class AmbientEngine {
@@ -107,16 +108,17 @@ export class AmbientEngine {
     this.tone.connect(this.master);
     this.master.connect(this.ctx.destination);
 
-    // reverb (generated impulse) + dry/wet mix, both into the tone filter
+    // reverb (generated impulse) + dry/wet mix, both into the tone filter.
+    // Longer, lusher tail + more wet for an intimate, romantic room.
     const convolver = this.ctx.createConvolver();
-    convolver.buffer = this.makeImpulse(3.2, 2.6);
+    convolver.buffer = this.makeImpulse(4.4, 2.2);
     this.wet = this.ctx.createGain();
-    this.wet.gain.value = 0.34;
+    this.wet.gain.value = 0.5;
     convolver.connect(this.wet);
     this.wet.connect(this.tone);
 
     this.dry = this.ctx.createGain();
-    this.dry.gain.value = 0.92;
+    this.dry.gain.value = 0.82;
     this.dry.connect(this.tone);
 
     this.reverbInput = convolver;
@@ -228,22 +230,23 @@ export class AmbientEngine {
   private piano(freq: number, at: number, dur: number, peak: number) {
     const ctx = this.ctx!;
     const env = ctx.createGain();
+    // softer attack + a longer, singing tail → felt-piano warmth
     env.gain.setValueAtTime(0.0001, at);
-    env.gain.exponentialRampToValueAtTime(peak, at + 0.012);
-    env.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    env.gain.exponentialRampToValueAtTime(peak, at + 0.035);
+    env.gain.exponentialRampToValueAtTime(0.0001, at + dur * 1.35);
 
     const lp = ctx.createBiquadFilter();
     lp.type = 'lowpass';
-    lp.frequency.setValueAtTime(4200, at);
-    lp.frequency.exponentialRampToValueAtTime(1400, at + dur);
+    lp.frequency.setValueAtTime(2600, at);
+    lp.frequency.exponentialRampToValueAtTime(900, at + dur);
     env.connect(lp);
     this.connectOut(lp);
 
     const partials: Array<[number, number, OscillatorType]> = [
+      [0.5, 0.16, 'sine'], // sub-octave for warmth
       [1, 1, 'sine'],
-      [2, 0.5, 'sine'],
-      [3, 0.22, 'sine'],
-      [1, 0.18, 'triangle'],
+      [2, 0.4, 'sine'],
+      [3, 0.1, 'sine'],
     ];
     for (const [mult, amp, type] of partials) {
       const o = ctx.createOscillator();
@@ -264,23 +267,24 @@ export class AmbientEngine {
     const ctx = this.ctx!;
     const lp = ctx.createBiquadFilter();
     lp.type = 'lowpass';
-    lp.frequency.value = 1100;
+    lp.frequency.value = 820;
     const env = ctx.createGain();
+    // slow swell in and out — a warm cushion under everything
     env.gain.setValueAtTime(0.0001, at);
-    env.gain.linearRampToValueAtTime(peak, at + dur * 0.35);
-    env.gain.setValueAtTime(peak, at + dur * 0.7);
-    env.gain.linearRampToValueAtTime(0.0001, at + dur);
+    env.gain.linearRampToValueAtTime(peak, at + dur * 0.45);
+    env.gain.setValueAtTime(peak, at + dur * 0.62);
+    env.gain.linearRampToValueAtTime(0.0001, at + dur * 1.1);
     lp.connect(env);
     this.connectOut(env);
 
-    for (const detune of [-6, 6]) {
+    for (const detune of [-8, 8]) {
       const o = ctx.createOscillator();
-      o.type = 'sawtooth';
+      o.type = 'triangle';
       o.frequency.value = freq;
       o.detune.value = detune;
       o.connect(lp);
       o.start(at);
-      o.stop(at + dur + 0.1);
+      o.stop(at + dur * 1.2 + 0.1);
       this.oscs.push(o);
     }
   }
@@ -313,32 +317,33 @@ export class AmbientEngine {
     this.barIndex++;
 
     const third = chord.type === 'min' ? 3 : 4;
-    const triad = [chord.root, chord.root + third, chord.root + 7];
+    const seventh = chord.type === 'min' ? 10 : 11; // min7 / maj7 for lushness
+    // Lush voicing: root · third · fifth · seventh · ninth
+    const voicing = [chord.root, chord.root + third, chord.root + 7, chord.root + seventh, chord.root + 14];
 
-    // Pad — full triad, one octave down, sustained across the bar.
-    for (const n of triad) this.pad(semi(n - 12), t0, bar * 1.02, 0.045);
+    // Pad — the full lush chord, one octave down, gently swelling across the bar.
+    for (const n of voicing) this.pad(semi(n - 12), t0, bar * 1.05, 0.038);
 
-    // Bass — root two octaves down, on beats 1 and 3.
-    this.bass(semi(chord.root - 24), t0, beat * 2, 0.14);
-    this.bass(semi(chord.root - 24), t0 + beat * 2, beat * 2, 0.11);
+    // Bass — soft root, held almost the whole bar (one slow heartbeat).
+    this.bass(semi(chord.root - 24), t0, beat * 3.4, 0.13);
 
-    // Broken-chord piano comp across the bar (root, third, fifth, octave).
-    const arp = [chord.root, chord.root + third, chord.root + 7, chord.root + 12];
-    arp.forEach((n, i) => this.piano(semi(n), t0 + i * beat, beat * 1.6, 0.05));
+    // Rolled-chord piano — a slow, tender arpeggio (7th chord).
+    const arp = [chord.root, chord.root + third, chord.root + 7, chord.root + seventh];
+    arp.forEach((n, i) => this.piano(semi(n), t0 + i * beat * 0.9, beat * 2, 0.045));
 
-    // Melody — improvised from safe chord/colour tones, up an octave.
-    const safe = [0, third, 7, 12, third + 12, 14, 9].map((o) => chord.root + o + 12);
+    // Melody — sparse and expressive, leaning on the emotional tones
+    // (3rd, 7th, 9th). Up an octave, with room to breathe.
+    const safe = [third, 7, seventh, 12, third + 12, 14, 9, 16].map((o) => chord.root + o + 12);
     const pattern = MELODY_PATTERNS[Math.floor(Math.random() * MELODY_PATTERNS.length)];
     for (const beatPos of pattern) {
-      // occasional rest for phrasing
-      if (Math.random() < 0.15) continue;
+      if (Math.random() < 0.22) continue; // more rests → more tender
       let note = safe[Math.floor(Math.random() * safe.length)];
       if (note === this.lastMelody && Math.random() < 0.7) {
         note = safe[Math.floor(Math.random() * safe.length)];
       }
       this.lastMelody = note;
-      const dur = beat * (1 + Math.random());
-      this.piano(semi(note), t0 + beatPos * beat, dur, 0.075 + Math.random() * 0.02);
+      const dur = beat * (1.8 + Math.random() * 1.2); // longer, singing notes
+      this.piano(semi(note), t0 + beatPos * beat, dur, 0.07 + Math.random() * 0.02);
     }
 
     if (this.oscs.length > 120) this.oscs = this.oscs.slice(-60);
