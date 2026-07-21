@@ -36,6 +36,10 @@ interface ExperienceValue {
   // Easter eggs — bump a counter to re-trigger a one-shot animation
   flowerBurst: number;
   dropFlowers: () => void;
+
+  // Balloons — released as she enters the experience
+  balloonBurst: number;
+  releaseBalloons: () => void;
 }
 
 const Ctx = createContext<ExperienceValue | null>(null);
@@ -49,6 +53,7 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [trackIndex, setTrackIndex] = useState(0);
   const [secretOpen, setSecretOpen] = useState(false);
   const [flowerBurst, setFlowerBurst] = useState(0);
+  const [balloonBurst, setBalloonBurst] = useState(0);
 
   const tracks = config.playlist;
 
@@ -99,6 +104,8 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
 
   const nextTrack = useCallback(() => playTrack(trackIndex + 1), [playTrack, trackIndex]);
 
+  const releaseBalloons = useCallback(() => setBalloonBurst((n) => n + 1), []);
+
   const start = useCallback(() => {
     setStarted(true);
     // Begin music automatically — this call originates from the user's tap,
@@ -106,6 +113,8 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
     const e = engine();
     void e.play();
     setIsPlaying(true);
+    // Celebrate the entrance with a rise of balloons.
+    setBalloonBurst((n) => n + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -138,11 +147,14 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
       closeSecret,
       flowerBurst,
       dropFlowers,
+      balloonBurst,
+      releaseBalloons,
     }),
     [
       started, start, musicReady, isPlaying, volume, trackIndex, tracks,
       toggleMusic, setVolume, nextTrack, playTrack,
       secretOpen, openSecret, closeSecret, flowerBurst, dropFlowers,
+      balloonBurst, releaseBalloons,
     ],
   );
 

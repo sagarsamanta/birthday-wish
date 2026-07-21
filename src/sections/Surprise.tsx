@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Gift, Sparkles } from 'lucide-react';
 import { config } from '@/data/config';
 import { Confetti } from '@/components/effects/Confetti';
+import { Cake } from '@/components/effects/Cake';
 import { haptic } from '@/utils/haptics';
 
 /**
@@ -93,6 +94,15 @@ export function Surprise() {
                 <p className="mt-4 max-w-sm font-serif-el text-lg italic text-warmwhite/70 text-pretty">
                   {config.surprise.sub}
                 </p>
+              </motion.div>
+
+              <motion.div
+                className="mt-12"
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ type: 'spring', stiffness: 160, damping: 20, delay: 0.6 }}
+              >
+                <Cake onBlowOut={() => setFire((n) => n + 1)} />
               </motion.div>
             </>
           )}

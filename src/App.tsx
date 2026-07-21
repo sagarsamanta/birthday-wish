@@ -11,6 +11,7 @@ import { SecretMessage } from '@/components/SecretMessage';
 import { ShakeListener } from '@/components/ShakeListener';
 import { PullReveal } from '@/components/PullReveal';
 import { FlowerFall } from '@/components/effects/FlowerFall';
+import { Balloons } from '@/components/effects/Balloons';
 
 import { Hero } from '@/sections/Hero';
 import { StoryFlow } from '@/sections/StoryFlow';
@@ -57,6 +58,7 @@ function Experience() {
       <ShakeListener />
       <PullReveal />
       <FlowerFall />
+      <Balloons />
     </>
   );
 }
