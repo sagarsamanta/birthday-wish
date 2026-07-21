@@ -36,8 +36,10 @@ function computeLocked(): boolean {
   if (!config.unlockDate) return false;
   try {
     const params = new URLSearchParams(window.location.search);
-    if (params.has('preview')) {
-      if (params.get('preview') === 'off') {
+    const path = window.location.pathname;
+    // `?preview`, `/preview` (path), or the remembered flag all unlock early.
+    if (path.includes('/preview') || params.has('preview')) {
+      if (params.get('preview') === 'off' || path.includes('/preview-off')) {
         localStorage.removeItem('preview');
       } else {
         localStorage.setItem('preview', '1');
