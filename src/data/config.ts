@@ -156,23 +156,23 @@ export const rawConfig = {
 
   loveLetter: {
     title: L('A Letter For You', 'তোমার জন্য একটা চিঠি'),
-    salutation: L('My dearest,', 'আমার সবচেয়ে প্রিয়,'),
+    salutation: L('My Sathi,', 'আমার সাথী,'),
     body: [
       L(
-        'If I tried to write down every reason I love you, I would run out of paper long before I ran out of reasons.',
-        'তোমাকে ভালোবাসার সব কারণ যদি লিখতে বসি, কারণ ফুরোনোর অনেক আগেই কাগজ ফুরিয়ে যাবে।',
+        'This is the very first time I get to wish you a happy birthday — and my heart has been waiting all year just to say it. Happy birthday, my love.',
+        'এই প্রথমবার আমি তোমাকে জন্মদিনের শুভেচ্ছা জানাতে পারছি — আর সারাটা বছর আমার মন শুধু এই কথাটা বলার জন্যই অপেক্ষা করেছে। শুভ জন্মদিন, আমার ভালোবাসা।',
       ),
       L(
-        'You have this way of turning ordinary days into ones I never want to forget. A glance, a laugh, the sound of your footsteps coming home — these are the things my heart collects.',
-        'সাধারণ দিনগুলোকে তুমি এমন করে তোলো, যেগুলো আমি কখনো ভুলতে চাই না। একটা চাহনি, একটা হাসি, ঘরে ফেরার সময় তোমার পায়ের শব্দ — এগুলোই আমার মন জমিয়ে রাখে।',
+        'We haven’t had our big day yet — the one with all the lights and all the people. But my name is already yours, and yours is already mine. That quiet promise we signed means more to me than any grand ceremony ever could.',
+        'আমাদের বড় দিনটা এখনো আসেনি — আলো, লোকজন, সব নিয়ে। কিন্তু আমার নামটা এখন তোমার, আর তোমার নামটা আমার। চুপচাপ যে কথাটায় আমরা সই করেছি, সেটা আমার কাছে যেকোনো বড় অনুষ্ঠানের চেয়েও অনেক বেশি দামি।',
       ),
       L(
-        'Thank you for your patience, your kindness, and the thousand tiny ways you make my world softer. Growing beside you is the greatest privilege of my life.',
-        'ধন্যবাদ তোমার ধৈর্যের জন্য, তোমার স্নেহের জন্য, আর হাজারটা ছোট ছোট উপায়ে আমার পৃথিবীটাকে কোমল করে তোলার জন্য। তোমার পাশে বেড়ে ওঠাটাই আমার জীবনের সবচেয়ে বড় সৌভাগ্য।',
+        'I don’t need big words to tell you how I feel. Just this: you make my ordinary days feel special, and every morning I fall for you a little more.',
+        'মনের কথা বলতে আমার বড় বড় শব্দ লাগে না। শুধু এইটুকু: তুমি আমার সাধারণ দিনগুলোকেও বিশেষ করে তোলো, আর প্রতিটা সকালে আমি তোমার প্রেমে আরেকটু করে পড়ি।',
       ),
       L(
-        'Today the world celebrates the day you were born. But I get to celebrate you every single day, and I will never stop feeling lucky about it.',
-        'আজ পৃথিবী তোমার জন্মের দিনটা উদযাপন করছে। কিন্তু আমি তো তোমাকে প্রতিদিন উদযাপন করি, আর এই সৌভাগ্যের অনুভূতি কখনো থামবে না।',
+        'I can’t wait to marry you all over again, in front of everyone we love. Until that day, and long, long after it — I am yours. Today, on your birthday, and every single day.',
+        'সবার সামনে আবার নতুন করে তোমাকে বিয়ে করার জন্য আমি আর তর সইতে পারছি না। সেই দিনটা পর্যন্ত, আর তারও অনেক অনেক পরেও — আমি তোমার। আজ, তোমার জন্মদিনে, আর প্রতিটা দিন।',
       ),
     ],
     signature: L('Forever yours', 'চিরকাল তোমার'),

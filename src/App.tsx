@@ -26,11 +26,25 @@ import { Surprise } from '@/sections/Surprise';
 import { Finale } from '@/sections/Finale';
 import { Closing } from '@/sections/Closing';
 
-/** Decide whether the experience should start locked behind the countdown. */
+/**
+ * Decide whether the experience should start locked behind the countdown.
+ * Add `?preview` to the URL to force-enter early — the bypass is then
+ * remembered on this device, while any other device still sees the countdown
+ * until `unlockDate`. Use `?preview=off` to clear it and see the countdown.
+ */
 function computeLocked(): boolean {
   if (!config.unlockDate) return false;
   try {
-    if (new URLSearchParams(window.location.search).has('preview')) return false;
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('preview')) {
+      if (params.get('preview') === 'off') {
+        localStorage.removeItem('preview');
+      } else {
+        localStorage.setItem('preview', '1');
+        return false;
+      }
+    }
+    if (localStorage.getItem('preview') === '1') return false;
   } catch {
     /* ignore */
   }
