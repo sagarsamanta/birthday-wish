@@ -156,26 +156,38 @@ export const rawConfig = {
 
   loveLetter: {
     title: L('A Letter For You', 'তোমার জন্য একটা চিঠি'),
-    salutation: L('My Sathi,', 'আমার সাথী,'),
+    salutation: L('My Dearest Sathi,', 'আমার প্রিয়তম সাথী,'),
     body: [
       L(
-        'This is the very first time I get to wish you a happy birthday — and my heart has been waiting all year just to say it. Happy birthday, my love.',
-        'এই প্রথমবার আমি তোমাকে জন্মদিনের শুভেচ্ছা জানাতে পারছি — আর সারাটা বছর আমার মন শুধু এই কথাটা বলার জন্যই অপেক্ষা করেছে। শুভ জন্মদিন, আমার ভালোবাসা।',
+        'Happy Birthday to the most beautiful person in my life.',
+        'শুভ জন্মদিন, আমার জীবনের সবচেয়ে সুন্দর মানুষ। 💖',
       ),
       L(
-        'We haven’t had our big day yet — the one with all the lights and all the people. But my name is already yours, and yours is already mine. That quiet promise we signed means more to me than any grand ceremony ever could.',
-        'আমাদের বড় দিনটা এখনো আসেনি — আলো, লোকজন, সব নিয়ে। কিন্তু আমার নামটা এখন তোমার, আর তোমার নামটা আমার। চুপচাপ যে কথাটায় আমরা সই করেছি, সেটা আমার কাছে যেকোনো বড় অনুষ্ঠানের চেয়েও অনেক বেশি দামি।',
+        'Today is not just the day you were born—it’s the day that brought happiness, love, and meaning into my world. Meeting you has been one of the greatest blessings of my life, and every day I thank God for bringing you to me.',
+        'আজকের দিনটা শুধু তোমার জন্মদিন নয়, আমার জীবনে সুখ, শান্তি আর ভালোবাসা আসার দিনও। তোমাকে পেয়ে আমি সত্যিই নিজেকে অনেক ভাগ্যবান মনে করি।',
       ),
       L(
-        'I don’t need big words to tell you how I feel. Just this: you make my ordinary days feel special, and every morning I fall for you a little more.',
-        'মনের কথা বলতে আমার বড় বড় শব্দ লাগে না। শুধু এইটুকু: তুমি আমার সাধারণ দিনগুলোকেও বিশেষ করে তোলো, আর প্রতিটা সকালে আমি তোমার প্রেমে আরেকটু করে পড়ি।',
+        'I may not always be able to express everything I feel, but I hope you always know this: you are the most precious person in my life. Your smile is my favorite sight, your happiness is my biggest wish, and your love is my greatest strength.',
+        'হয়তো আমি সবসময় আমার অনুভূতিগুলো ঠিকভাবে প্রকাশ করতে পারি না, কিন্তু বিশ্বাস করো—তুমি আমার কাছে পৃথিবীর সবচেয়ে মূল্যবান মানুষ। তোমার হাসি আমার শক্তি, তোমার সুখ আমার সবচেয়ে বড় ইচ্ছা।',
       ),
       L(
-        'I can’t wait to marry you all over again, in front of everyone we love. Until that day, and long, long after it — I am yours. Today, on your birthday, and every single day.',
-        'সবার সামনে আবার নতুন করে তোমাকে বিয়ে করার জন্য আমি আর তর সইতে পারছি না। সেই দিনটা পর্যন্ত, আর তারও অনেক অনেক পরেও — আমি তোমার। আজ, তোমার জন্মদিনে, আর প্রতিটা দিন।',
+        'As we begin this beautiful journey toward our future together, I want to make you one promise: I will always stand by your side. Through every smile, every challenge, every success, and every difficult moment, I will hold your hand and never let go.',
+        'আমি প্রতিশ্রুতি দিচ্ছি, জীবনের প্রতিটি মুহূর্তে তোমার পাশে থাকব। সুখে, দুঃখে, সাফল্যে, ব্যর্থতায়—সবসময় তোমার হাতটা শক্ত করে ধরে রাখব। তুমি কখনো একা নও, কারণ আমি আছি, আজ, আগামীকাল, আর সারাজীবন।',
+      ),
+      L(
+        'I pray that this new year of your life brings you endless happiness, good health, success, and all the dreams you’ve ever wished for. May your beautiful smile never fade, because it lights up my entire world.',
+        'তোমার জীবনের প্রতিটি স্বপ্ন পূরণ হোক, প্রতিটি দিন আনন্দে ভরে উঠুক, আর তোমার মুখের এই সুন্দর হাসিটা যেন কখনো হারিয়ে না যায়।',
+      ),
+      L(
+        'Happy 23rd Birthday, My Love. ❤️ You are not just my future wife—you are my best friend, my safe place, my biggest blessing, and the love I want to choose every single day for the rest of my life.',
+        'Happy 23rd Birthday, My Love. ❤️ তুমি শুধু আমার হবু স্ত্রী নও, তুমি আমার ভবিষ্যৎ, আমার শান্তি, আমার সবচেয়ে প্রিয় মানুষ।',
+      ),
+      L(
+        'Thank you for loving me, believing in me, and making my life so beautiful. I can’t wait for the day when we’ll celebrate your birthday as husband and wife, creating countless beautiful memories together. Until then, know that my heart belongs to you, today and always. I love you more than words can ever express.',
+        'I love you more than words can ever express.',
       ),
     ],
-    signature: L('Forever yours', 'চিরকাল তোমার'),
+    signature: L('Forever Yours', 'চিরকাল তোমার'),
   },
 
   timeline: {
