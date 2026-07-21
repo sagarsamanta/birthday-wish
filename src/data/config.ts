@@ -162,6 +162,7 @@ export const rawConfig = {
       { src: '/gallery/family/IMG-20260609-WA0013.jpg', title: L('Where You Come From', 'তোমার শিকড়'), caption: L('The love you give so freely — you learned it here first.', 'যে ভালোবাসা তুমি এত অকৃপণভাবে দাও — সেটা প্রথম এখান থেকেই শিখেছ।'), date: D.jun9 },
       { src: '/gallery/family/IMG-20260715-WA0000.jpg', title: L('All Together', 'সবাই একসাথে'), caption: L('The best days are the ones with everyone under one roof.', 'সেরা দিনগুলো সেই, যখন সবাই এক ছাদের নিচে থাকে।'), date: D.jul15, location: SPECIAL },
       { src: '/gallery/family/file_000000006f407206808914686e5bbd86.png', title: L('Home', 'ঘর'), caption: L('Family isn’t just where we start — it’s where we belong.', 'পরিবার শুধু শুরুর জায়গা নয় — ওটাই আমাদের আপন জায়গা।'), date: D.moment },
+      { src: '/gallery/sagar_sathi_together/file_00000000fd647230b6b50206b13c1f9f.png', title: L('Just Us Two', 'শুধু আমরা দুজন'), caption: L('The whole world faded, and there was only you.', 'গোটা পৃথিবীটা মিলিয়ে গেল, রইলে শুধু তুমি।'), date: D.moment },
     ],
   },
 
